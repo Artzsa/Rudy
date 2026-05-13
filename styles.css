@@ -209,6 +209,17 @@ p {
   margin-bottom: 2rem;
 }
 
+/* ── Hero video (Home) ── */
+.hero-video-section {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.hero-video {
+  width: 100%;
+  display: block;
+}
+
 /* ── Grid masonry untuk Home (Pinterest-style) ── */
 .gif-grid {
   columns: 3;
