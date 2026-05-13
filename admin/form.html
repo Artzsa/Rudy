@@ -82,7 +82,7 @@
         <div class="form-group">
           <label for="cover_gif">Cover GIF</label>
           <div class="input-row">
-            <input type="url" id="cover_gif" name="cover_gif" placeholder="Paste URL or upload" oninput="updatePreview()" />
+            <input type="text" id="cover_gif" name="cover_gif" placeholder="Paste URL or upload" oninput="updatePreview()" />
             <button type="button" class="btn-upload" onclick="uploadFile('cover_gif')">Browse</button>
           </div>
         </div>
@@ -200,7 +200,7 @@
       var div = document.createElement('div');
       div.className = 'gallery-item';
       div.innerHTML =
-        '<input type="url" class="gallery-src" placeholder="GIF URL" value="' + (src || '') + '" /> ' +
+        '<input type="text" class="gallery-src" placeholder="GIF URL" value="' + (src || '') + '" /> ' +
         '<input type="text" class="gallery-alt" placeholder="Alt text" value="' + (alt || '') + '" /> ' +
         '<input type="text" class="gallery-caption" placeholder="Caption" value="' + (caption || '') + '" /> ' +
         '<button type="button" class="btn-upload" onclick="uploadGalleryItem(this)">Browse</button> ' +
