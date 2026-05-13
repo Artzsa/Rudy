@@ -99,9 +99,7 @@ function renderHome(projects) {
     .map(
       (project, index) => `
         <a class="gif-card ${index % 4 === 3 ? "accent-ink" : index % 4 === 2 ? "accent-olive" : index % 4 === 1 ? "accent-cream" : "accent-red"}" href="${buildProjectUrl(project.slug)}">
-          <div class="gif-frame">
-            <img src="${project.cover_gif}" alt="${project.title} animated preview" loading="lazy" />
-          </div>
+          <img src="${project.cover_gif}" alt="${project.title} animated preview" loading="lazy" />
         </a>
       `
     )
@@ -121,9 +119,7 @@ function renderProject(project) {
           .map(
             (item) => `
               <article class="gallery-card">
-                <div class="gallery-frame">
-                  <img src="${item.src}" alt="${item.alt || project.title}" loading="lazy" />
-                </div>
+                <img src="${item.src}" alt="${item.alt || project.title}" loading="lazy" />
                 ${item.caption ? `<p class="gallery-caption">${item.caption}</p>` : ""}
               </article>
             `
@@ -131,9 +127,7 @@ function renderProject(project) {
           .join("")
       : `
         <article class="gallery-card">
-          <div class="gallery-frame">
-            <img src="${project.cover_gif}" alt="${project.title} animated preview" loading="lazy" />
-          </div>
+          <img src="${project.cover_gif}" alt="${project.title} animated preview" loading="lazy" />
         </article>
       `;
 
@@ -158,15 +152,13 @@ function renderVideoHub(projects) {
     .map(
       (project, index) => `
         <div class="video-card ${index % 3 === 2 ? "accent-ink" : index % 3 === 1 ? "accent-olive" : "accent-cream"}" id="${project.slug}">
-          <div class="video-card-frame">
-            <iframe
-              src="${youtubeEmbedUrl(project.youtube_url)}"
-              title="${project.title}"
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
-          </div>
+          <iframe
+            src="${youtubeEmbedUrl(project.youtube_url)}"
+            title="${project.title}"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
         </div>
       `
     )
