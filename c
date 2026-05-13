@@ -1,7 +1,0 @@
-- [x] Install express-session
-- [ ] Update server.js (login endpoint + session middleware)
-- [ ] Buat admin/login.html
-- [ ] Update admin/dashboard.html (cek session)
-- [ ] Update admin/form.html (cek session)
-- [ ] Test login
-- [ ] Push ke git
