@@ -1,0 +1,16 @@
+node_modules/
+data.db
+data.db-shm
+data.db-wal
+uploads/*.gif
+uploads/*.png
+uploads/*.jpg
+uploads/*.jpeg
+uploads/*.webp
+uploads/*.mp4
+uploads/*.webm
+!uploads/.gitkeep
+.DS_Store
+*.log
+.env
+task_progress.md

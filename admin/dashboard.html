@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RudiGetih Admin</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f5eddc; color: #18161a; padding: 2rem; }
+    h1 { font-size: 2rem; margin-bottom: 1.5rem; }
+    .btn { display: inline-flex; align-items: center; padding: 0.6rem 1.2rem; border-radius: 999px; text-decoration: none; font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer; }
+    .btn-primary { background: #18161a; color: #fff9ef; }
+    .btn-danger { background: #c24a36; color: #fff; }
+    .btn-secondary { background: rgba(24,22,26,0.1); color: #18161a; }
+    table { width: 100%; border-collapse: collapse; background: rgba(255,249,239,0.78); border: 1px solid rgba(24,22,26,0.1); box-shadow: 0 18px 40px rgba(24,22,26,0.15); }
+    th, td { padding: 0.8rem 1rem; text-align: left; border-bottom: 1px solid rgba(24,22,26,0.08); }
+    th { font-family: monospace; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.06em; color: #3d3840; }
+    td { font-size: 0.9rem; }
+    td img { width: 60px; height: 40px; object-fit: cover; border-radius: 4px; }
+    .actions { display: flex; gap: 0.5rem; }
+    .actions a, .actions button { font-size: 0.8rem; padding: 0.4rem 0.8rem; }
+    .header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .empty { text-align: center; padding: 3rem; color: #3d3840; }
+    .toast { position: fixed; bottom: 2rem; right: 2rem; padding: 1rem 1.5rem; background: #18161a; color: #fff9ef; border-radius: 8px; font-size: 0.9rem; opacity: 0; transition: opacity 0.3s; z-index: 999; }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <h1>RudiGetih &mdash; Projects</h1>
+    <a class="btn btn-primary" href="/admin/new">+ New Project</a>
+  </div>
+  <div id="loading" class="empty">Loading...</div>
+  <table id="projects-table" style="display:none">
+    <thead>
+      <tr>
+        <th>Cover</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Slug</th>
+        <th>Featured</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="projects-body"></tbody>
+  </table>
+  <div id="empty-state" class="empty" style="display:none">
+    <p>No projects yet.</p>
+    <a class="btn btn-primary" href="/admin/new" style="margin-top:1rem">+ Create your first project</a>
+  </div>
+  <div id="toast" class="toast"></div>
+
+  <script>
+    async function loadProjects() {
+      try {
+        const res = await fetch('/api/projects');
+        const projects = await res.json();
+        document.getElementById('loading').style.display = 'none';
+
+        if (projects.length === 0) {
+          document.getElementById('empty-state').style.display = 'block';
+          return;
+        }
+
+        const table = document.getElementById('projects-table');
+        const tbody = document.getElementById('projects-body');
+        table.style.display = 'table';
+        tbody.innerHTML = '';
+
+        projects.forEach(function(p) {
+          var tr = document.createElement('tr');
+
+          // Cover
+          var tdCover = document.createElement('td');
+          if (p.cover_gif) {
+            var img = document.createElement('img');
+            img.src = p.cover_gif;
+            img.alt = p.title;
+            tdCover.appendChild(img);
+          } else {
+            tdCover.textContent = '\u2014';
+          }
+          tr.appendChild(tdCover);
+
+          // Title
+          var tdTitle = document.createElement('td');
+          var strong = document.createElement('strong');
+          strong.textContent = p.title;
+          tdTitle.appendChild(strong);
+          tr.appendChild(tdTitle);
+
+          // Category
+          var tdCat = document.createElement('td');
+          tdCat.textContent = p.category || '\u2014';
+          tr.appendChild(tdCat);
+
+          // Slug
+          var tdSlug = document.createElement('td');
+          var code = document.createElement('code');
+          code.textContent = p.slug;
+          tdSlug.appendChild(code);
+          tr.appendChild(tdSlug);
+
+          // Featured
+          var tdFeat = document.createElement('td');
+          tdFeat.textContent = p.featured;
+          tr.appendChild(tdFeat);
+
+          // Actions
+          var tdActions = document.createElement('td');
+          tdActions.className = 'actions';
+
+          var editLink = document.createElement('a');
+          editLink.className = 'btn btn-secondary';
+          editLink.href = '/admin/edit?id=' + p.id;
+          editLink.textContent = 'Edit';
+          tdActions.appendChild(editLink);
+
+          var delBtn = document.createElement('button');
+          delBtn.className = 'btn btn-danger';
+          delBtn.textContent = 'Delete';
+          delBtn.onclick = function() { deleteProject(p.id, p.title); };
+          tdActions.appendChild(delBtn);
+
+          tr.appendChild(tdActions);
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        document.getElementById('loading').textContent = 'Error: ' + err.message;
+      }
+    }
+
+    async function deleteProject(id, title) {
+      if (!confirm('Delete "' + title + '"?')) return;
+      try {
+        const res = await fetch('/api/projects/' + id, { method: 'DELETE' });
+        if (!res.ok) throw new Error('Failed');
+        showToast('Deleted!');
+        loadProjects();
+      } catch (err) {
+        showToast('Error: ' + err.message);
+      }
+    }
+
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function() { t.classList.remove('show'); }, 3000);
+    }
+
+    loadProjects();
+  </script>
+</body>
+</html>

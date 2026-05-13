@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact — RudiGetih</title>
+    <meta
+      name="description"
+      content="Get in touch with RudiGetih for collage art, motion design, and visual projects."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body
+    data-page="contact"
+    data-content-path="/api/projects"
+    data-project-base="./project/"
+    data-home-path="./index.html"
+    data-videos-path="./videos.html"
+  >
+    <div class="paper-noise" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="./index.html">
+        <span class="brand-mark">RG</span>
+        <span class="brand-copy">
+          <strong>RudiGetih</strong>
+          <span>collage art studio</span>
+        </span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+      </button>
+      <nav class="site-nav" id="site-nav">
+        <a href="./index.html#work">Work</a>
+        <a href="./videos.html">Videos</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main class="page-shell">
+      <section class="about-me-section">
+        <div class="about-me-content reveal-target">
+          <div class="about-me-photo">
+            <img src="./uploads/gatsby.webp" alt="Paper Riot Studio - Freelance Motion Designer" loading="lazy" />
+          </div>
+          <div class="about-me-text">
+            <p class="eyebrow">About me</p>
+            <h1>Freelance motion designer & visual storyteller.</h1>
+            <p>
+              I'm a freelance creative specializing in GIF-first collage work, music video treatments,
+              live session visuals, and campaign motion. Every project starts with raw energy and
+              keeps the rough edges visible — because that's where the feeling lives.
+            </p>
+            <p>
+              Based wherever the work takes me. Available for short edits, full video roll-outs,
+              and visual systems that move.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-form-section">
+        <div class="section-heading reveal-target">
+          <p class="eyebrow">Hire me</p>
+          <h2>Tiasa Kintun Email di Handapya</h2>
+        </div>
+        <form class="contact-form reveal-target" id="contact-form">
+          <div class="form-field">
+            <label for="form-name">Name</label>
+            <input type="text" id="form-name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="form-field">
+            <label for="form-email">Email</label>
+            <input type="email" id="form-email" name="email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-field">
+            <label for="form-message">Message</label>
+            <textarea id="form-message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+          </div>
+          <button class="button button-primary" type="submit">Send message</button>
+        </form>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

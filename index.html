@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RudiGetih — Collage Art Studio</title>
+    <meta
+      name="description"
+      content="Collage art studio by RudiGetih — animated GIF portfolio with project case studies and video hub."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body
+    data-page="home"
+    data-content-path="/api/projects"
+    data-project-base="./project/"
+    data-home-path="./index.html"
+    data-videos-path="./videos.html"
+  >
+    <div class="paper-noise" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="./index.html">
+        <span class="brand-mark">RG</span>
+        <span class="brand-copy">
+          <strong>RudiGetih</strong>
+          <span>collage art studio</span>
+        </span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+      </button>
+      <nav class="site-nav" id="site-nav">
+        <a href="#work">Work</a>
+        <a href="./videos.html">Videos</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="work-section" id="work">
+        <div class="gif-grid" id="project-grid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+{
+  "projects": [
+    {
+      "title": "Static Hearts - Launch Visual",
+      "category": "Music Video",
+      "slug": "static-hearts",
+      "cover_gif": "https://platform.vox.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/8689467/gatsby.gif?quality=90&strip=all&crop=18.78125,0,62.4375,100",
+      "gallery_gifs": [
+        {
+          "src": "https://novawebbusiness.com/wp-content/uploads/2022/12/Wow-gif.gif",
+          "alt": "ini mantap brooo"
+        },
+        {
+          "src": "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2xxeG5hZWM5bmVqODV1N2w4d3p2N21vb24zNWJ4a3dpeXhiY2h4bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/7T9Qs5vyghGaN7Vhkz/giphy.gif"
+        },
+        {
+          "src": "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2xxeG5hZWM5bmVqODV1N2w4d3p2N21vb24zNWJ4a3dpeXhiY2h4bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/7T9Qs5vyghGaN7Vhkz/giphy.gif"
+        }
+      ],
+      "short_description": "okehhh",
+      "project_text": "mantap boskuh",
+      "youtube_url": "https://youtu.be/EmMzl7X-lt8?si=ewOHBx4OIPuUnz_q",
+      "poster_image": "",
+      "featured": 1
+    },
+    {
+      "title": "test",
+      "category": "test",
+      "slug": "test",
+      "cover_gif": "https://i.makeagif.com/media/3-04-2017/VqVhI2.gif",
+      "gallery_gifs": [],
+      "short_description": "te",
+      "project_text": "te",
+      "youtube_url": "https://www.youtube.com/watch?v=VxSBqw6Gv38",
+      "poster_image": "",
+      "featured": 1
+    },
+    {
+      "title": "Hai antek antek aseng",
+      "category": "mantap",
+      "slug": "asing",
+      "cover_gif": "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3IxNjB6cjJ3MGVlOWdvdHJoNHAzcTU0cW52c20wZWhmbmwxMW1tbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/j2KK4hi34L02o3swoh/giphy.gif",
+      "gallery_gifs": [],
+      "short_description": "hai antek antek asing",
+      "project_text": "hai",
+      "youtube_url": "https://www.youtube.com/watch?v=uiGLBHBFlwA",
+      "poster_image": "",
+      "featured": 1
+    },
+    {
+      "title": "Hidup Jokowi",
+      "category": "Jokowi",
+      "slug": "Hidup jokowi",
+      "cover_gif": "https://media1.tenor.com/m/gNgtEpVk_fUAAAAd/prabowo-wowo.gif",
+      "gallery_gifs": [],
+      "short_description": "Hidup Jokowi",
+      "project_text": "Hidup Jokowi",
+      "youtube_url": "https://youtu.be/hO76QCeThkw?si=EQFE5ephXall4E-g",
+      "poster_image": "",
+      "featured": 1
+    }
+  ]
+}

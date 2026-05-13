@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Form — RudiGetih Admin</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f5eddc; color: #18161a; padding: 2rem; }
+    h1 { font-size: 1.8rem; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    label { display: block; font-family: monospace; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: #3d3840; margin-bottom: 0.3rem; }
+    input, textarea { width: 100%; padding: 0.7rem 1rem; font-family: system-ui; font-size: 0.95rem; border: 1px solid rgba(24,22,26,0.2); background: rgba(255,251,245,0.8); color: #18161a; border-radius: 0; }
+    textarea { min-height: 80px; resize: vertical; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn { display: inline-flex; align-items: center; padding: 0.7rem 1.5rem; border-radius: 999px; text-decoration: none; font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer; }
+    .btn-primary { background: #18161a; color: #fff9ef; }
+    .btn-danger { background: #c24a36; color: #fff; }
+    .btn-secondary { background: rgba(24,22,26,0.1); color: #18161a; }
+    .btn-upload { background: #3d3840; color: #fff9ef; padding: 0.4rem 0.8rem; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; white-space: nowrap; }
+    .actions { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+    .card { padding: 2rem; background: rgba(255,249,239,0.78); border: 1px solid rgba(24,22,26,0.1); box-shadow: 0 18px 40px rgba(24,22,26,0.15); }
+    .toast { position: fixed; bottom: 2rem; right: 2rem; padding: 1rem 1.5rem; background: #18161a; color: #fff9ef; border-radius: 8px; font-size: 0.9rem; opacity: 0; transition: opacity 0.3s; z-index: 999; }
+    .toast.show { opacity: 1; }
+    .toast.error { background: #c24a36; }
+    .gallery-item { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
+    .gallery-item input { flex: 1; }
+    .gallery-item button { padding: 0.4rem 0.8rem; background: #c24a36; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    .add-gallery-btn { margin-top: 0.5rem; padding: 0.4rem 1rem; background: rgba(24,22,26,0.1); border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; }
+
+    /* Input + Upload button row */
+    .input-row { display: flex; gap: 0.5rem; align-items: center; }
+    .input-row input { flex: 1; }
+
+    /* Layout: form + preview side by side */
+    .form-layout { display: flex; gap: 2rem; align-items: flex-start; }
+    .form-col { flex: 1; max-width: 720px; }
+    .preview-col { flex: 0 0 380px; position: sticky; top: 2rem; }
+
+    /* Preview card */
+    .preview-card { background: rgba(255,249,239,0.78); border: 1px solid rgba(24,22,26,0.1); box-shadow: 0 18px 40px rgba(24,22,26,0.15); overflow: hidden; }
+    .preview-card img { width: 100%; height: 200px; object-fit: cover; display: block; border-bottom: 1px solid rgba(24,22,26,0.08); }
+    .preview-body { padding: 1.2rem; }
+    .preview-body h3 { font-size: 1.3rem; margin-bottom: 0.3rem; }
+    .preview-body .preview-cat { color: #c24a36; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.8rem; }
+    .preview-body p { color: #3d3840; font-size: 0.9rem; line-height: 1.5; }
+    .preview-label { font-family: monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: #3d3840; margin-bottom: 0.5rem; }
+
+    @media (max-width: 900px) {
+      .form-layout { flex-direction: column; }
+      .preview-col { flex: none; width: 100%; position: static; }
+    }
+  </style>
+</head>
+<body>
+  <a href="/admin" style="display:inline-flex;margin-bottom:1.5rem;color:#18161a;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:0.2rem;font-family:monospace;font-size:0.8rem;">&larr; Back to projects</a>
+  <h1 id="form-title">New Project</h1>
+
+  <div class="form-layout">
+    <div class="form-col">
+      <form class="card" id="project-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="title">Title *</label>
+            <input type="text" id="title" name="title" required oninput="updatePreview()" />
+          </div>
+          <div class="form-group">
+            <label for="category">Category</label>
+            <input type="text" id="category" name="category" oninput="updatePreview()" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="slug">Slug *</label>
+            <input type="text" id="slug" name="slug" required />
+          </div>
+          <div class="form-group">
+            <label for="featured">Featured Order</label>
+            <input type="number" id="featured" name="featured" value="1" min="1" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cover_gif">Cover GIF</label>
+          <div class="input-row">
+            <input type="url" id="cover_gif" name="cover_gif" placeholder="Paste URL or upload" oninput="updatePreview()" />
+            <button type="button" class="btn-upload" onclick="uploadFile('cover_gif')">Browse</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="youtube_url">YouTube URL</label>
+          <input type="url" id="youtube_url" name="youtube_url" placeholder="https://youtu.be/..." />
+        </div>
+        <div class="form-group">
+          <label for="short_description">Short Description</label>
+          <textarea id="short_description" name="short_description" oninput="updatePreview()"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="project_text">Project Text</label>
+          <textarea id="project_text" name="project_text"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="poster_image">Poster Image</label>
+          <div class="input-row">
+            <input type="url" id="poster_image" name="poster_image" placeholder="Paste URL or upload" />
+            <button type="button" class="btn-upload" onclick="uploadFile('poster_image')">Browse</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Gallery GIFs</label>
+          <div id="gallery-container"></div>
+          <button type="button" class="add-gallery-btn" onclick="addGalleryItem()">+ Add GIF</button>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">Save Project</button>
+          <a href="/admin" class="btn btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="preview-col">
+      <div class="preview-label">Live Preview</div>
+      <div class="preview-card" id="live-preview">
+        <img id="preview-img" src="https://via.placeholder.com/380x200?text=No+Cover" alt="Preview" />
+        <div class="preview-body">
+          <h3 id="preview-title">Project Title</h3>
+          <div class="preview-cat" id="preview-cat">Category</div>
+          <p id="preview-desc">Short description will appear here...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    var isEdit = window.location.pathname === '/admin/edit';
+    var projectId = null;
+
+    // ─── Upload function ───
+    function uploadFile(targetInputId) {
+      var input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.gif,.png,.jpg,.jpeg,.webp,.mp4,.webm';
+      input.onchange = async function(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+
+        var formData = new FormData();
+        formData.append('file', file);
+
+        try {
+          var res = await fetch('/api/upload', { method: 'POST', body: formData });
+          if (!res.ok) {
+            var err = await res.json();
+            throw new Error(err.error || 'Upload failed');
+          }
+          var data = await res.json();
+          document.getElementById(targetInputId).value = data.url;
+          if (targetInputId === 'cover_gif') updatePreview();
+          showToast('File uploaded: ' + data.filename);
+        } catch (err) {
+          showToast('Upload error: ' + err.message, true);
+        }
+      };
+      input.click();
+    }
+
+    // ─── Upload for gallery items ───
+    function uploadGalleryItem(btn) {
+      var input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.gif,.png,.jpg,.jpeg,.webp';
+      input.onchange = async function(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+
+        var formData = new FormData();
+        formData.append('file', file);
+
+        try {
+          var res = await fetch('/api/upload', { method: 'POST', body: formData });
+          if (!res.ok) {
+            var err = await res.json();
+            throw new Error(err.error || 'Upload failed');
+          }
+          var data = await res.json();
+          // Find the sibling input
+          var row = btn.parentElement;
+          row.querySelector('.gallery-src').value = data.url;
+          showToast('File uploaded: ' + data.filename);
+        } catch (err) {
+          showToast('Upload error: ' + err.message, true);
+        }
+      };
+      input.click();
+    }
+
+    function addGalleryItem(src, alt, caption) {
+      var container = document.getElementById('gallery-container');
+      var div = document.createElement('div');
+      div.className = 'gallery-item';
+      div.innerHTML =
+        '<input type="url" class="gallery-src" placeholder="GIF URL" value="' + (src || '') + '" /> ' +
+        '<input type="text" class="gallery-alt" placeholder="Alt text" value="' + (alt || '') + '" /> ' +
+        '<input type="text" class="gallery-caption" placeholder="Caption" value="' + (caption || '') + '" /> ' +
+        '<button type="button" class="btn-upload" onclick="uploadGalleryItem(this)">Browse</button> ' +
+        '<button type="button" onclick="this.parentElement.remove()">X</button>';
+      container.appendChild(div);
+    }
+
+    function updatePreview() {
+      var title = document.getElementById('title').value || 'Project Title';
+      var cat = document.getElementById('category').value || 'Category';
+      var desc = document.getElementById('short_description').value || 'Short description will appear here...';
+      var cover = document.getElementById('cover_gif').value;
+
+      document.getElementById('preview-title').textContent = title;
+      document.getElementById('preview-cat').textContent = cat;
+      document.getElementById('preview-desc').textContent = desc;
+
+      var img = document.getElementById('preview-img');
+      if (cover) {
+        img.src = cover;
+        img.style.display = 'block';
+      } else {
+        img.src = 'https://via.placeholder.com/380x200?text=No+Cover';
+        img.style.display = 'block';
+      }
+    }
+
+    // Load project data if editing
+    if (isEdit) {
+      var params = new URLSearchParams(window.location.search);
+      projectId = params.get('id');
+
+      if (projectId) {
+        document.getElementById('form-title').textContent = 'Edit Project';
+
+        fetch('/api/projects/' + projectId)
+          .then(function(res) { return res.json(); })
+          .then(function(p) {
+            document.getElementById('title').value = p.title || '';
+            document.getElementById('category').value = p.category || '';
+            document.getElementById('slug').value = p.slug || '';
+            document.getElementById('featured').value = p.featured || 1;
+            document.getElementById('cover_gif').value = p.cover_gif || '';
+            document.getElementById('youtube_url').value = p.youtube_url || '';
+            document.getElementById('short_description').value = p.short_description || '';
+            document.getElementById('project_text').value = p.project_text || '';
+            document.getElementById('poster_image').value = p.poster_image || '';
+
+            if (p.gallery_gifs && p.gallery_gifs.length > 0) {
+              p.gallery_gifs.forEach(function(g) {
+                addGalleryItem(g.src, g.alt, g.caption);
+              });
+            }
+
+            updatePreview();
+          })
+          .catch(function(err) {
+            showToast('Error loading project: ' + err.message, true);
+          });
+      }
+    }
+
+    document.getElementById('project-form').onsubmit = async function(e) {
+      e.preventDefault();
+
+      var items = Array.from(document.querySelectorAll('.gallery-item')).map(function(el) {
+        return {
+          src: el.querySelector('.gallery-src').value,
+          alt: el.querySelector('.gallery-alt').value,
+          caption: el.querySelector('.gallery-caption').value,
+        };
+      }).filter(function(g) { return g.src; });
+
+      var data = {
+        title: document.getElementById('title').value,
+        category: document.getElementById('category').value,
+        slug: document.getElementById('slug').value,
+        cover_gif: document.getElementById('cover_gif').value,
+        youtube_url: document.getElementById('youtube_url').value,
+        short_description: document.getElementById('short_description').value,
+        project_text: document.getElementById('project_text').value,
+        poster_image: document.getElementById('poster_image').value,
+        featured: parseInt(document.getElementById('featured').value) || 1,
+        gallery_gifs: items,
+      };
+
+      try {
+        var url = isEdit ? '/api/projects/' + projectId : '/api/projects';
+        var method = isEdit ? 'PUT' : 'POST';
+
+        var res = await fetch(url, {
+          method: method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        if (!res.ok) {
+          var err = await res.json();
+          throw new Error(err.error || 'Failed to save');
+        }
+
+        showToast('Project saved!');
+        setTimeout(function() { window.location.href = '/admin'; }, 1000);
+      } catch (err) {
+        showToast('Error: ' + err.message, true);
+      }
+    };
+
+    function showToast(msg, isError) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast show' + (isError ? ' error' : '');
+      setTimeout(function() { t.classList.remove('show'); }, 3000);
+    }
+  </script>
+</body>
+</html>
