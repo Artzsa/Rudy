@@ -1,6 +1,0 @@
-- [x] Hapus frame dari CSS (.gif-frame, .video-card-frame, .gallery-frame)
-- [x] Hapus wrapper frame dari script.js (renderHome, renderProject, renderVideoHub)
-- [x] Hapus background, border, shadow, rotate, tape dari .gif-card, .video-card, .gallery-card
-- [ ] Ganti .gif-grid jadi masonry (Pinterest-style)
-- [ ] Test hasilnya
-- [ ] Push ke git
