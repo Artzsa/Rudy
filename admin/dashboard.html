@@ -28,7 +28,11 @@
 <body>
   <div class="header-bar">
     <h1>RudiGetih &mdash; Projects</h1>
-    <a class="btn btn-primary" href="/admin/new">+ New Project</a>
+    <div style="display:flex;gap:0.5rem;align-items:center">
+      <span id="user-label" style="font-size:0.85rem;color:#3d3840;"></span>
+      <button class="btn btn-danger" onclick="logout()" style="font-size:0.75rem;padding:0.4rem 0.8rem">Logout</button>
+      <a class="btn btn-primary" href="/admin/new">+ New Project</a>
+    </div>
   </div>
   <div id="loading" class="empty">Loading...</div>
   <table id="projects-table" style="display:none">
@@ -148,6 +152,18 @@
       t.classList.add('show');
       setTimeout(function() { t.classList.remove('show'); }, 3000);
     }
+
+    async function logout() {
+      await fetch('/api/logout', { method: 'POST' });
+      window.location.href = '/admin/login';
+    }
+
+    // Show username
+    fetch('/api/me').then(function(r) { return r.json(); }).then(function(d) {
+      if (d.authenticated) {
+        document.getElementById('user-label').textContent = d.username;
+      }
+    });
 
     loadProjects();
   </script>

@@ -3,6 +3,7 @@ const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
+const session = require("express-session");
 const Database = require("better-sqlite3");
 
 const app = express();
@@ -11,6 +12,54 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
+
+// ─── Session ───
+app.use(session({
+  secret: "rudigetih-secret-key-2026",
+  resave: false,
+  saveUninitialized: false,
+  cookie: { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 } // 1 day
+}));
+
+// ─── Auth middleware ───
+function requireAuth(req, res, next) {
+  if (req.session && req.session.authenticated) {
+    return next();
+  }
+  // If requesting an admin page, redirect to login
+  if (req.path.startsWith("/admin") && req.path !== "/admin/login") {
+    return res.redirect("/admin/login");
+  }
+  next();
+}
+
+// Apply auth to admin routes (except login page)
+app.use("/admin", requireAuth);
+app.use("/api/projects", requireAuth);
+app.use("/api/upload", requireAuth);
+
+// ─── Login ───
+app.post("/api/login", function(req, res) {
+  const { username, password } = req.body;
+  if (username === "admin007" && password === "admin008") {
+    req.session.authenticated = true;
+    req.session.username = username;
+    return res.json({ success: true });
+  }
+  res.status(401).json({ error: "Invalid credentials" });
+});
+
+app.post("/api/logout", function(req, res) {
+  req.session.destroy();
+  res.json({ success: true });
+});
+
+app.get("/api/me", function(req, res) {
+  if (req.session && req.session.authenticated) {
+    return res.json({ authenticated: true, username: req.session.username });
+  }
+  res.json({ authenticated: false });
+});
 
 // ─── File Upload ───
 
@@ -217,6 +266,10 @@ app.delete("/api/projects/:id", (req, res) => {
 });
 
 // ─── Serve admin HTML files ───
+
+app.get("/admin/login", function(req, res) {
+  res.sendFile(path.join(__dirname, "admin", "login.html"));
+});
 
 app.get("/admin", function(req, res) {
   res.sendFile(path.join(__dirname, "admin", "dashboard.html"));

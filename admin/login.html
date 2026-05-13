@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — RudiGetih Admin</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f5eddc; color: #18161a; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-card { padding: 2.5rem; background: rgba(255,249,239,0.78); border: 1px solid rgba(24,22,26,0.1); box-shadow: 0 18px 40px rgba(24,22,26,0.15); width: 100%; max-width: 380px; }
+    h1 { font-size: 1.5rem; margin-bottom: 0.3rem; }
+    p { color: #3d3840; font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; font-family: monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: #3d3840; margin-bottom: 0.3rem; }
+    input { width: 100%; padding: 0.7rem 1rem; font-family: system-ui; font-size: 0.95rem; border: 1px solid rgba(24,22,26,0.2); background: rgba(255,251,245,0.8); color: #18161a; border-radius: 0; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 0.7rem 1.5rem; border-radius: 999px; text-decoration: none; font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer; background: #18161a; color: #fff9ef; margin-top: 0.5rem; }
+    .error { color: #c24a36; font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h1>Admin Login</h1>
+    <p>RudiGetih Portfolio</p>
+    <form id="login-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required autocomplete="username" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password" />
+      </div>
+      <div class="error" id="error-msg">Invalid credentials</div>
+      <button type="submit" class="btn">Login</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('login-form').onsubmit = async function(e) {
+      e.preventDefault();
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+      var errorEl = document.getElementById('error-msg');
+
+      try {
+        var res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        if (!res.ok) {
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        window.location.href = '/admin';
+      } catch (err) {
+        errorEl.style.display = 'block';
+      }
+    };
+  </script>
+</body>
+</html>
