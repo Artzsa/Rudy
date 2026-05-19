@@ -20,10 +20,12 @@ if (!SESSION_SECRET || !ADMIN_USERNAME || !ADMIN_PASSWORD) {
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
+app.set("trust proxy", 1);
 
 // ─── Session ───
 app.use(session({
   secret: SESSION_SECRET,
+  proxy: true,
   resave: false,
   saveUninitialized: false,
   cookie: {
