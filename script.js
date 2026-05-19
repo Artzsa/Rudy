@@ -115,6 +115,46 @@ function youtubeEmbedUrl(idOrUrl) {
   return "";
 }
 
+async function loadProfile() {
+  const response = await fetch("/api/profile");
+  if (!response.ok) {
+    throw new Error("Failed to load profile content.");
+  }
+  return response.json();
+}
+
+function applyProfile(profile) {
+  document.querySelectorAll("[data-profile-text]").forEach((element) => {
+    const key = element.getAttribute("data-profile-text");
+    if (profile[key]) {
+      element.textContent = profile[key];
+    }
+  });
+
+  document.querySelectorAll("[data-profile-src]").forEach((element) => {
+    const key = element.getAttribute("data-profile-src");
+    const value = sanitizeMediaUrl(profile[key]);
+    if (value) {
+      element.src = value;
+    }
+  });
+
+  document.querySelectorAll("[data-profile-link]").forEach((element) => {
+    const key = element.getAttribute("data-profile-link");
+    if (profile[key]) {
+      element.href = profile[key];
+    }
+  });
+
+  document.querySelectorAll("[data-profile-email]").forEach((element) => {
+    const key = element.getAttribute("data-profile-email");
+    if (profile[key]) {
+      element.href = `mailto:${profile[key]}`;
+      element.textContent = profile[key];
+    }
+  });
+}
+
 async function loadProjects() {
   const response = await fetch(contentPath);
   if (!response.ok) {
@@ -448,6 +488,8 @@ function renderMissingProject(state) {
 
 async function init() {
   try {
+    const profile = await loadProfile();
+    applyProfile(profile);
     const projects = await loadProjects();
 
     if (page === "home") {

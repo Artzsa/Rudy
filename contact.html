@@ -28,8 +28,8 @@
       <a class="brand" href="./index.html">
         <span class="brand-mark">RG</span>
         <span class="brand-copy">
-          <strong>RudiGetih</strong>
-          <span>collage art studio</span>
+          <strong data-profile-text="display_name">RudiGetih</strong>
+          <span data-profile-text="brand_subtitle">collage art studio</span>
         </span>
       </a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
@@ -43,17 +43,15 @@
     </header>
 
     <main class="contact-layout" id="top">
-
-      <!-- ── Left Panel: Studio Info ── -->
       <aside class="contact-left">
         <div class="contact-left-top">
-          <p class="eyebrow" style="color: var(--red); margin-bottom: 0;">Visual Alchemist</p>
+          <p class="eyebrow" style="color: var(--red); margin-bottom: 0;" data-profile-text="contact_eyebrow">Visual Alchemist</p>
           <h1 class="contact-tagline">
-            Let's Build
-            <span>Something</span>
-            <span class="accent">Loud.</span>
+            <span data-profile-text="contact_title_line1">Let's Build</span>
+            <span data-profile-text="contact_title_line2">Something</span>
+            <span class="accent" data-profile-text="contact_title_accent">Loud.</span>
           </h1>
-          <p class="contact-desc">
+          <p class="contact-desc" data-profile-text="contact_description">
             Kirim pesan untuk kolaborasi visual, mixed media treatment, atau proyek kolase. Kita bikin sesuatu yang nyata.
           </p>
         </div>
@@ -67,7 +65,7 @@
             </div>
             <div>
               <div class="contact-info-label">Email Langsung</div>
-              <a href="mailto:rudi@getih.com" class="contact-info-val">rudi@getih.com</a>
+              <a href="mailto:rudi@getih.com" class="contact-info-val" data-profile-email="contact_email">rudi@getih.com</a>
             </div>
           </div>
 
@@ -77,7 +75,7 @@
             </div>
             <div>
               <div class="contact-info-label">Telegram</div>
-              <a href="https://t.me/rudigetih" target="_blank" class="contact-info-val">@rudigetih</a>
+              <a href="https://t.me/rudigetih" target="_blank" class="contact-info-val" data-profile-link="telegram_url" data-profile-text="telegram_label">@rudigetih</a>
             </div>
           </div>
 
@@ -87,19 +85,19 @@
             </div>
             <div>
               <div class="contact-info-label">Instagram</div>
-              <a href="https://instagram.com/rudigetih" target="_blank" class="contact-info-val">@rudigetih</a>
+              <a href="https://instagram.com/rudigetih" target="_blank" class="contact-info-val" data-profile-link="instagram_url" data-profile-text="instagram_label">@rudigetih</a>
             </div>
           </div>
 
           <div class="contact-social-row">
-            <a href="https://behance.net/rudigetih" target="_blank" class="contact-social-pill">
-              <span>Bē</span> Behance
+            <a href="https://behance.net/rudigetih" target="_blank" class="contact-social-pill" data-profile-link="behance_url">
+              <span>Bē</span> <span data-profile-text="behance_label">Behance</span>
             </a>
-            <a href="https://instagram.com/rudigetih" target="_blank" class="contact-social-pill">
+            <a href="https://instagram.com/rudigetih" target="_blank" class="contact-social-pill" data-profile-link="instagram_url">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/></svg>
               IG
             </a>
-            <a href="https://t.me/rudigetih" target="_blank" class="contact-social-pill">
+            <a href="https://t.me/rudigetih" target="_blank" class="contact-social-pill" data-profile-link="telegram_url">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/></svg>
               TG
             </a>
@@ -111,25 +109,21 @@
         </div>
       </aside>
 
-      <!-- ── Right Panel: Contact Form ── -->
       <section class="contact-right">
-
-        <!-- Success State -->
         <div class="contact-success" id="contact-success">
           <div class="success-icon">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
-          <h2 class="success-title">Nuhun Bos!</h2>
-          <p class="success-sub">Pesan anjeun parantos dikintun. Kuring bakal ngawaler sacepatna!</p>
+          <h2 class="success-title" data-profile-text="contact_success_title">Nuhun Bos!</h2>
+          <p class="success-sub" data-profile-text="contact_success_message">Pesan anjeun parantos dikintun. Kuring bakal ngawaler sacepatna!</p>
           <button class="contact-submit-btn" id="btn-reset-form" type="button" style="width: auto; padding: 0.9rem 2.5rem;">
             Kirim Pesan Lagi
           </button>
         </div>
 
-        <!-- Form -->
         <form id="contact-form">
-          <p class="contact-form-eyebrow">Get in Touch</p>
-          <h2 class="contact-form-title">Send a Treatment<br/>Inquiry</h2>
+          <p class="contact-form-eyebrow" data-profile-text="contact_form_eyebrow">Get in Touch</p>
+          <h2 class="contact-form-title" data-profile-text="contact_form_title">Send a Treatment Inquiry</h2>
 
           <div class="cfield">
             <input type="text" id="form-name" name="name" placeholder=" " required />
@@ -155,7 +149,6 @@
             Send Message ↗
           </button>
         </form>
-
       </section>
     </main>
 

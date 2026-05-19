@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Profile — RudiGetih Admin</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f5eddc; color: #18161a; padding: 2rem; }
+    h1 { font-size: 1.8rem; margin-bottom: 1.5rem; }
+    h2 { font-size: 1rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.06em; color: #3d3840; }
+    .shell { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 2rem; align-items: start; }
+    .card { padding: 2rem; background: rgba(255,249,239,0.78); border: 1px solid rgba(24,22,26,0.1); box-shadow: 0 18px 40px rgba(24,22,26,0.15); margin-bottom: 1.5rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    label { display: block; font-family: monospace; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: #3d3840; margin-bottom: 0.3rem; }
+    input, textarea { width: 100%; padding: 0.7rem 1rem; font-family: system-ui; font-size: 0.95rem; border: 1px solid rgba(24,22,26,0.2); background: rgba(255,251,245,0.8); color: #18161a; border-radius: 0; }
+    textarea { min-height: 90px; resize: vertical; }
+    .input-row { display: flex; gap: 0.5rem; align-items: center; }
+    .input-row input { flex: 1; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.7rem 1.5rem; border-radius: 999px; text-decoration: none; font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer; }
+    .btn-primary { background: #18161a; color: #fff9ef; }
+    .btn-secondary { background: rgba(24,22,26,0.1); color: #18161a; }
+    .btn-upload { background: #3d3840; color: #fff9ef; padding: 0.4rem 0.8rem; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; white-space: nowrap; }
+    .actions { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+    .preview-card { position: sticky; top: 2rem; padding: 0; overflow: hidden; }
+    .preview-card img { width: 100%; height: 210px; object-fit: cover; display: block; border-bottom: 1px solid rgba(24,22,26,0.08); }
+    .preview-body { padding: 1.4rem; }
+    .preview-role { font-size: 0.78rem; color: #3d3840; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.35rem; }
+    .preview-loc { color: #3d3840; font-size: 0.9rem; margin-bottom: 1rem; }
+    .preview-bio { color: #3d3840; font-size: 0.92rem; line-height: 1.6; }
+    .toast { position: fixed; bottom: 2rem; right: 2rem; padding: 1rem 1.5rem; background: #18161a; color: #fff9ef; border-radius: 8px; font-size: 0.9rem; opacity: 0; transition: opacity 0.3s; z-index: 999; }
+    .toast.show { opacity: 1; }
+    .toast.error { background: #c24a36; }
+    @media (max-width: 900px) {
+      .shell { grid-template-columns: 1fr; }
+      .preview-card { position: static; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <a href="/admin" style="display:inline-flex;margin-bottom:1.5rem;color:#18161a;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:0.2rem;font-family:monospace;font-size:0.8rem;">&larr; Back to dashboard</a>
+  <h1>Edit Profile</h1>
+
+  <div class="shell">
+    <form id="profile-form">
+      <section class="card">
+        <h2>Brand</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="display_name">Display Name</label>
+            <input type="text" id="display_name" name="display_name" oninput="updatePreview()" required />
+          </div>
+          <div class="form-group">
+            <label for="brand_subtitle">Brand Subtitle</label>
+            <input type="text" id="brand_subtitle" name="brand_subtitle" oninput="updatePreview()" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="role_title">Role Title</label>
+            <input type="text" id="role_title" name="role_title" oninput="updatePreview()" />
+          </div>
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" oninput="updatePreview()" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="avatar_image">Avatar Image</label>
+          <div class="input-row">
+            <input type="text" id="avatar_image" name="avatar_image" oninput="updatePreview()" />
+            <button type="button" class="btn-upload" onclick="uploadFile('avatar_image')">Browse</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="about_bio">About Bio</label>
+          <textarea id="about_bio" name="about_bio" oninput="updatePreview()"></textarea>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Contact</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contact_email">Email</label>
+            <input type="email" id="contact_email" name="contact_email" />
+          </div>
+          <div class="form-group">
+            <label for="behance_label">Behance Label</label>
+            <input type="text" id="behance_label" name="behance_label" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="telegram_url">Telegram URL</label>
+            <input type="url" id="telegram_url" name="telegram_url" />
+          </div>
+          <div class="form-group">
+            <label for="telegram_label">Telegram Label</label>
+            <input type="text" id="telegram_label" name="telegram_label" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="instagram_url">Instagram URL</label>
+            <input type="url" id="instagram_url" name="instagram_url" />
+          </div>
+          <div class="form-group">
+            <label for="instagram_label">Instagram Label</label>
+            <input type="text" id="instagram_label" name="instagram_label" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="behance_url">Behance URL</label>
+          <input type="url" id="behance_url" name="behance_url" />
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Contact Page Copy</h2>
+        <div class="form-group">
+          <label for="contact_eyebrow">Left Eyebrow</label>
+          <input type="text" id="contact_eyebrow" name="contact_eyebrow" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contact_title_line1">Headline Line 1</label>
+            <input type="text" id="contact_title_line1" name="contact_title_line1" />
+          </div>
+          <div class="form-group">
+            <label for="contact_title_line2">Headline Line 2</label>
+            <input type="text" id="contact_title_line2" name="contact_title_line2" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contact_title_accent">Headline Accent</label>
+            <input type="text" id="contact_title_accent" name="contact_title_accent" />
+          </div>
+          <div class="form-group">
+            <label for="contact_form_eyebrow">Form Eyebrow</label>
+            <input type="text" id="contact_form_eyebrow" name="contact_form_eyebrow" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="contact_form_title">Form Title</label>
+          <input type="text" id="contact_form_title" name="contact_form_title" />
+        </div>
+        <div class="form-group">
+          <label for="contact_description">Contact Description</label>
+          <textarea id="contact_description" name="contact_description"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contact_success_title">Success Title</label>
+            <input type="text" id="contact_success_title" name="contact_success_title" />
+          </div>
+          <div class="form-group">
+            <label for="contact_success_message">Success Message</label>
+            <input type="text" id="contact_success_message" name="contact_success_message" />
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">Save Profile</button>
+          <a href="/admin" class="btn btn-secondary">Cancel</a>
+        </div>
+      </section>
+    </form>
+
+    <aside class="card preview-card">
+      <img id="preview-avatar" src="https://via.placeholder.com/360x210?text=Avatar" alt="Profile preview" />
+      <div class="preview-body">
+        <h2 style="margin-bottom:0.35rem;text-transform:none;letter-spacing:0;color:#18161a;font-size:1.5rem;" id="preview-name">RudiGetih</h2>
+        <div class="preview-role" id="preview-role">Collage & Motion Artist</div>
+        <div class="preview-loc" id="preview-location">Bandung, Indonesia</div>
+        <p class="preview-bio" id="preview-bio">Profile preview will appear here.</p>
+      </div>
+    </aside>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    async function loadProfile() {
+      const res = await fetch('/api/profile');
+      if (!res.ok) throw new Error('Failed to load profile');
+      return res.json();
+    }
+
+    function setFormValue(key, value) {
+      const field = document.getElementById(key);
+      if (field) field.value = value || '';
+    }
+
+    function updatePreview() {
+      document.getElementById('preview-name').textContent = document.getElementById('display_name').value || 'RudiGetih';
+      document.getElementById('preview-role').textContent = document.getElementById('role_title').value || 'Collage & Motion Artist';
+      document.getElementById('preview-location').textContent = document.getElementById('location').value || 'Bandung, Indonesia';
+      document.getElementById('preview-bio').textContent = document.getElementById('about_bio').value || 'Profile preview will appear here.';
+      document.getElementById('preview-avatar').src = document.getElementById('avatar_image').value || 'https://via.placeholder.com/360x210?text=Avatar';
+    }
+
+    function showToast(msg, isError) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast show' + (isError ? ' error' : '');
+      setTimeout(function() { t.classList.remove('show'); }, 3000);
+    }
+
+    async function uploadFile(targetInputId) {
+      var input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.gif,.png,.jpg,.jpeg,.webp';
+      input.onchange = async function(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+
+        var formData = new FormData();
+        formData.append('file', file);
+
+        try {
+          var res = await fetch('/api/upload', { method: 'POST', body: formData });
+          if (!res.ok) {
+            var err = await res.json();
+            throw new Error(err.error || 'Upload failed');
+          }
+          var data = await res.json();
+          document.getElementById(targetInputId).value = data.url;
+          updatePreview();
+          showToast('File uploaded: ' + data.filename);
+        } catch (err) {
+          showToast('Upload error: ' + err.message, true);
+        }
+      };
+      input.click();
+    }
+
+    loadProfile()
+      .then(function(profile) {
+        Object.keys(profile).forEach(function(key) {
+          setFormValue(key, profile[key]);
+        });
+        updatePreview();
+      })
+      .catch(function(err) {
+        showToast(err.message, true);
+      });
+
+    document.getElementById('profile-form').onsubmit = async function(e) {
+      e.preventDefault();
+      const data = {
+        display_name: document.getElementById('display_name').value,
+        brand_subtitle: document.getElementById('brand_subtitle').value,
+        role_title: document.getElementById('role_title').value,
+        location: document.getElementById('location').value,
+        avatar_image: document.getElementById('avatar_image').value,
+        about_bio: document.getElementById('about_bio').value,
+        contact_email: document.getElementById('contact_email').value,
+        telegram_url: document.getElementById('telegram_url').value,
+        telegram_label: document.getElementById('telegram_label').value,
+        instagram_url: document.getElementById('instagram_url').value,
+        instagram_label: document.getElementById('instagram_label').value,
+        behance_url: document.getElementById('behance_url').value,
+        behance_label: document.getElementById('behance_label').value,
+        contact_eyebrow: document.getElementById('contact_eyebrow').value,
+        contact_title_line1: document.getElementById('contact_title_line1').value,
+        contact_title_line2: document.getElementById('contact_title_line2').value,
+        contact_title_accent: document.getElementById('contact_title_accent').value,
+        contact_description: document.getElementById('contact_description').value,
+        contact_form_eyebrow: document.getElementById('contact_form_eyebrow').value,
+        contact_form_title: document.getElementById('contact_form_title').value,
+        contact_success_title: document.getElementById('contact_success_title').value,
+        contact_success_message: document.getElementById('contact_success_message').value
+      };
+
+      try {
+        const res = await fetch('/api/profile', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || 'Failed to save profile');
+        }
+        showToast('Profile saved!');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    };
+  </script>
+</body>
+</html>

@@ -168,6 +168,79 @@ db.exec(`
   )
 `);
 
+db.exec(`
+  CREATE TABLE IF NOT EXISTS site_profile (
+    id INTEGER PRIMARY KEY CHECK (id = 1),
+    display_name TEXT NOT NULL DEFAULT '',
+    brand_subtitle TEXT NOT NULL DEFAULT '',
+    role_title TEXT NOT NULL DEFAULT '',
+    location TEXT NOT NULL DEFAULT '',
+    avatar_image TEXT NOT NULL DEFAULT '',
+    about_bio TEXT NOT NULL DEFAULT '',
+    contact_email TEXT NOT NULL DEFAULT '',
+    telegram_url TEXT NOT NULL DEFAULT '',
+    telegram_label TEXT NOT NULL DEFAULT '',
+    instagram_url TEXT NOT NULL DEFAULT '',
+    instagram_label TEXT NOT NULL DEFAULT '',
+    behance_url TEXT NOT NULL DEFAULT '',
+    behance_label TEXT NOT NULL DEFAULT '',
+    contact_eyebrow TEXT NOT NULL DEFAULT '',
+    contact_title_line1 TEXT NOT NULL DEFAULT '',
+    contact_title_line2 TEXT NOT NULL DEFAULT '',
+    contact_title_accent TEXT NOT NULL DEFAULT '',
+    contact_description TEXT NOT NULL DEFAULT '',
+    contact_form_eyebrow TEXT NOT NULL DEFAULT '',
+    contact_form_title TEXT NOT NULL DEFAULT '',
+    contact_success_title TEXT NOT NULL DEFAULT '',
+    contact_success_message TEXT NOT NULL DEFAULT '',
+    updated_at TEXT DEFAULT (datetime('now'))
+  )
+`);
+
+const defaultProfile = {
+  id: 1,
+  display_name: "RudiGetih",
+  brand_subtitle: "collage art studio",
+  role_title: "Collage & Motion Artist",
+  location: "Bandung, Indonesia",
+  avatar_image: "./uploads/gatsby.webp",
+  about_bio: "Visual creator specializing in GIF-first collage art, mixed media video treatments, and experimental motion design. Tearing up the rules of digital polish, embracing rough edges, analog dust, and paper-cut textures.",
+  contact_email: "rudi@getih.com",
+  telegram_url: "https://t.me/rudigetih",
+  telegram_label: "@rudigetih",
+  instagram_url: "https://instagram.com/rudigetih",
+  instagram_label: "@rudigetih",
+  behance_url: "https://behance.net/rudigetih",
+  behance_label: "Behance",
+  contact_eyebrow: "Visual Alchemist",
+  contact_title_line1: "Let's Build",
+  contact_title_line2: "Something",
+  contact_title_accent: "Loud.",
+  contact_description: "Kirim pesan untuk kolaborasi visual, mixed media treatment, atau proyek kolase. Kita bikin sesuatu yang nyata.",
+  contact_form_eyebrow: "Get in Touch",
+  contact_form_title: "Send a Treatment Inquiry",
+  contact_success_title: "Nuhun Bos!",
+  contact_success_message: "Pesan anjeun parantos dikintun. Kuring bakal ngawaler sacepatna!"
+};
+
+db.prepare(`
+  INSERT OR IGNORE INTO site_profile (
+    id, display_name, brand_subtitle, role_title, location, avatar_image, about_bio,
+    contact_email, telegram_url, telegram_label, instagram_url, instagram_label,
+    behance_url, behance_label, contact_eyebrow, contact_title_line1,
+    contact_title_line2, contact_title_accent, contact_description,
+    contact_form_eyebrow, contact_form_title, contact_success_title,
+    contact_success_message
+  ) VALUES (
+    @id, @display_name, @brand_subtitle, @role_title, @location, @avatar_image, @about_bio,
+    @contact_email, @telegram_url, @telegram_label, @instagram_url, @instagram_label,
+    @behance_url, @behance_label, @contact_eyebrow, @contact_title_line1,
+    @contact_title_line2, @contact_title_accent, @contact_description,
+    @contact_form_eyebrow, @contact_form_title, @contact_success_title,
+    @contact_success_message
+  )
+`).run(defaultProfile);
+
 // Seed
 const count = db.prepare("SELECT COUNT(*) as count FROM projects").get();
 if (count.count === 0) {
@@ -216,6 +289,15 @@ app.get("/api/projects", (req, res) => {
       p.gallery_gifs = JSON.parse(p.gallery_gifs || "[]");
       return p;
     }));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/api/profile", (req, res) => {
+  try {
+    const profile = db.prepare("SELECT * FROM site_profile WHERE id = 1").get();
+    res.json(profile || defaultProfile);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -298,6 +380,68 @@ app.delete("/api/projects/:id", requireAuthApi, (req, res) => {
   }
 });
 
+app.put("/api/profile", requireAuthApi, (req, res) => {
+  try {
+    const b = req.body || {};
+    const existing = db.prepare("SELECT * FROM site_profile WHERE id = 1").get() || defaultProfile;
+    db.prepare(`
+      UPDATE site_profile SET
+        display_name = ?,
+        brand_subtitle = ?,
+        role_title = ?,
+        location = ?,
+        avatar_image = ?,
+        about_bio = ?,
+        contact_email = ?,
+        telegram_url = ?,
+        telegram_label = ?,
+        instagram_url = ?,
+        instagram_label = ?,
+        behance_url = ?,
+        behance_label = ?,
+        contact_eyebrow = ?,
+        contact_title_line1 = ?,
+        contact_title_line2 = ?,
+        contact_title_accent = ?,
+        contact_description = ?,
+        contact_form_eyebrow = ?,
+        contact_form_title = ?,
+        contact_success_title = ?,
+        contact_success_message = ?,
+        updated_at = datetime('now')
+      WHERE id = 1
+    `).run(
+      b.display_name !== undefined ? b.display_name : existing.display_name,
+      b.brand_subtitle !== undefined ? b.brand_subtitle : existing.brand_subtitle,
+      b.role_title !== undefined ? b.role_title : existing.role_title,
+      b.location !== undefined ? b.location : existing.location,
+      b.avatar_image !== undefined ? b.avatar_image : existing.avatar_image,
+      b.about_bio !== undefined ? b.about_bio : existing.about_bio,
+      b.contact_email !== undefined ? b.contact_email : existing.contact_email,
+      b.telegram_url !== undefined ? b.telegram_url : existing.telegram_url,
+      b.telegram_label !== undefined ? b.telegram_label : existing.telegram_label,
+      b.instagram_url !== undefined ? b.instagram_url : existing.instagram_url,
+      b.instagram_label !== undefined ? b.instagram_label : existing.instagram_label,
+      b.behance_url !== undefined ? b.behance_url : existing.behance_url,
+      b.behance_label !== undefined ? b.behance_label : existing.behance_label,
+      b.contact_eyebrow !== undefined ? b.contact_eyebrow : existing.contact_eyebrow,
+      b.contact_title_line1 !== undefined ? b.contact_title_line1 : existing.contact_title_line1,
+      b.contact_title_line2 !== undefined ? b.contact_title_line2 : existing.contact_title_line2,
+      b.contact_title_accent !== undefined ? b.contact_title_accent : existing.contact_title_accent,
+      b.contact_description !== undefined ? b.contact_description : existing.contact_description,
+      b.contact_form_eyebrow !== undefined ? b.contact_form_eyebrow : existing.contact_form_eyebrow,
+      b.contact_form_title !== undefined ? b.contact_form_title : existing.contact_form_title,
+      b.contact_success_title !== undefined ? b.contact_success_title : existing.contact_success_title,
+      b.contact_success_message !== undefined ? b.contact_success_message : existing.contact_success_message
+    );
+
+    const updated = db.prepare("SELECT * FROM site_profile WHERE id = 1").get();
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ─── Serve admin HTML files ───
 
 app.get("/admin/login", function(req, res) {
@@ -314,6 +458,10 @@ app.get("/admin/new", function(req, res) {
 
 app.get("/admin/edit", function(req, res) {
   res.sendFile(path.join(__dirname, "admin", "form.html"));
+});
+
+app.get("/admin/profile", function(req, res) {
+  res.sendFile(path.join(__dirname, "admin", "profile.html"));
 });
 
 // ─── Start ───
