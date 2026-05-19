@@ -6,7 +6,7 @@
     <title>Contact — RudiGetih</title>
     <meta
       name="description"
-      content="Get in touch with RudiGetih for collage art, motion design, and visual projects."
+      content="Get in touch with RudiGetih Collage Art Studio for visual collaborations, motion design projects, and experimental treatments."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,48 +42,120 @@
       </nav>
     </header>
 
-    <main class="page-shell">
-      <section class="about-me-section">
-        <div class="about-me-content reveal-target">
-          <div class="about-me-photo">
-            <img src="./uploads/gatsby.webp" alt="Paper Riot Studio - Freelance Motion Designer" loading="lazy" />
-          </div>
-          <div class="about-me-text">
-            <p class="eyebrow">About me</p>
-            <h1>Freelance motion designer & visual storyteller.</h1>
-            <p>
-              I'm a freelance creative specializing in GIF-first collage work, music video treatments,
-              live session visuals, and campaign motion. Every project starts with raw energy and
-              keeps the rough edges visible — because that's where the feeling lives.
-            </p>
-            <p>
-              Based wherever the work takes me. Available for short edits, full video roll-outs,
-              and visual systems that move.
-            </p>
-          </div>
-        </div>
-      </section>
+    <main class="contact-layout" id="top">
 
-      <section class="contact-form-section">
-        <div class="section-heading reveal-target">
-          <p class="eyebrow">Hire me</p>
-          <h2>Tiasa Kintun Email di Handapya</h2>
+      <!-- ── Left Panel: Studio Info ── -->
+      <aside class="contact-left">
+        <div class="contact-left-top">
+          <p class="eyebrow" style="color: var(--red); margin-bottom: 0;">Visual Alchemist</p>
+          <h1 class="contact-tagline">
+            Let's Build
+            <span>Something</span>
+            <span class="accent">Loud.</span>
+          </h1>
+          <p class="contact-desc">
+            Kirim pesan untuk kolaborasi visual, mixed media treatment, atau proyek kolase. Kita bikin sesuatu yang nyata.
+          </p>
         </div>
-        <form class="contact-form reveal-target" id="contact-form">
-          <div class="form-field">
-            <label for="form-name">Name</label>
-            <input type="text" id="form-name" name="name" placeholder="Your name" required />
+
+        <div class="contact-left-bottom">
+          <div class="contact-divider"></div>
+
+          <div class="contact-info-item">
+            <div class="contact-info-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">Email Langsung</div>
+              <a href="mailto:rudi@getih.com" class="contact-info-val">rudi@getih.com</a>
+            </div>
           </div>
-          <div class="form-field">
-            <label for="form-email">Email</label>
-            <input type="email" id="form-email" name="email" placeholder="your@email.com" required />
+
+          <div class="contact-info-item">
+            <div class="contact-info-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">Telegram</div>
+              <a href="https://t.me/rudigetih" target="_blank" class="contact-info-val">@rudigetih</a>
+            </div>
           </div>
-          <div class="form-field">
-            <label for="form-message">Message</label>
-            <textarea id="form-message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+
+          <div class="contact-info-item">
+            <div class="contact-info-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">Instagram</div>
+              <a href="https://instagram.com/rudigetih" target="_blank" class="contact-info-val">@rudigetih</a>
+            </div>
           </div>
-          <button class="button button-primary" type="submit">Send message</button>
+
+          <div class="contact-social-row">
+            <a href="https://behance.net/rudigetih" target="_blank" class="contact-social-pill">
+              <span>Bē</span> Behance
+            </a>
+            <a href="https://instagram.com/rudigetih" target="_blank" class="contact-social-pill">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/></svg>
+              IG
+            </a>
+            <a href="https://t.me/rudigetih" target="_blank" class="contact-social-pill">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/></svg>
+              TG
+            </a>
+          </div>
+
+          <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: rgba(255,249,239,0.35); text-transform: uppercase; letter-spacing: 0.05em; margin: 0.5rem 0 0;">
+            Based in Bandung, West Java, ID
+          </p>
+        </div>
+      </aside>
+
+      <!-- ── Right Panel: Contact Form ── -->
+      <section class="contact-right">
+
+        <!-- Success State -->
+        <div class="contact-success" id="contact-success">
+          <div class="success-icon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2 class="success-title">Nuhun Bos!</h2>
+          <p class="success-sub">Pesan anjeun parantos dikintun. Kuring bakal ngawaler sacepatna!</p>
+          <button class="contact-submit-btn" id="btn-reset-form" type="button" style="width: auto; padding: 0.9rem 2.5rem;">
+            Kirim Pesan Lagi
+          </button>
+        </div>
+
+        <!-- Form -->
+        <form id="contact-form">
+          <p class="contact-form-eyebrow">Get in Touch</p>
+          <h2 class="contact-form-title">Send a Treatment<br/>Inquiry</h2>
+
+          <div class="cfield">
+            <input type="text" id="form-name" name="name" placeholder=" " required />
+            <label for="form-name">Your Name</label>
+          </div>
+
+          <div class="cfield">
+            <input type="email" id="form-email" name="email" placeholder=" " required />
+            <label for="form-email">Email Address</label>
+          </div>
+
+          <div class="cfield">
+            <input type="text" id="form-subject" name="subject" placeholder=" " />
+            <label for="form-subject">Project Type / Subject</label>
+          </div>
+
+          <div class="cfield">
+            <textarea id="form-message" name="message" rows="4" placeholder=" " required></textarea>
+            <label for="form-message">Tell me about your project...</label>
+          </div>
+
+          <button class="contact-submit-btn" type="submit" id="contact-submit">
+            Send Message ↗
+          </button>
         </form>
+
       </section>
     </main>
 

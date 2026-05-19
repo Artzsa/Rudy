@@ -66,7 +66,8 @@
           </div>
           <div class="form-group">
             <label for="category">Category</label>
-            <input type="text" id="category" name="category" oninput="updatePreview()" />
+            <input type="text" id="category" name="category" list="categories-list" oninput="updatePreview()" />
+            <datalist id="categories-list"></datalist>
           </div>
         </div>
         <div class="form-row">
@@ -227,6 +228,36 @@
         img.style.display = 'block';
       }
     }
+
+    // Fetch and populate category datalist
+    async function populateCategoryDatalist() {
+      try {
+        var res = await fetch('/api/projects');
+        if (res.ok) {
+          var projects = await res.json();
+          // Extract unique categories
+          var categoriesMap = {};
+          projects.forEach(function(p) {
+            if (p.category) {
+              categoriesMap[p.category] = true;
+            }
+          });
+          var categories = Object.keys(categoriesMap);
+          var datalist = document.getElementById('categories-list');
+          if (datalist) {
+            datalist.innerHTML = '';
+            categories.forEach(function(cat) {
+              var option = document.createElement('option');
+              option.value = cat;
+              datalist.appendChild(option);
+            });
+          }
+        }
+      } catch (err) {
+        console.error('Failed to populate categories datalist', err);
+      }
+    }
+    populateCategoryDatalist();
 
     // Load project data if editing
     if (isEdit) {

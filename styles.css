@@ -209,17 +209,6 @@ p {
   margin-bottom: 2rem;
 }
 
-/* ── Hero video (Home) ── */
-.hero-video-section {
-  width: 100%;
-  margin-bottom: 2rem;
-}
-
-.hero-video {
-  width: 100%;
-  display: block;
-}
-
 /* ── Grid masonry untuk Home (Pinterest-style) ── */
 .gif-grid {
   columns: 3;
@@ -235,24 +224,17 @@ p {
   text-decoration: none;
 }
 
-/* ── Grid 3 kolom untuk Videos ── */
+/* ── Video grid ── */
 .video-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
-.video-card {
-}
-
 .project-tag {
   display: inline-flex;
   margin-bottom: 1.5rem;
   font-size: 0.76rem;
-}
-
-.accent-red {
-  background: linear-gradient(180deg, rgba(194, 74, 54, 0.16), rgba(255, 249, 239, 0.9));
 }
 
 .accent-cream {
@@ -379,89 +361,6 @@ p {
   transform: rotate(8deg);
 }
 
-/* ── Contact page ── */
-.about-me-section {
-  padding: 4rem 0;
-}
-
-.about-me-content {
-  display: grid;
-  grid-template-columns: 0.4fr 0.6fr;
-  gap: 2.5rem;
-  align-items: center;
-}
-
-.about-me-photo {
-  overflow: hidden;
-  border: 1px solid rgba(24, 22, 26, 0.16);
-  box-shadow: var(--shadow);
-  background: #111;
-  aspect-ratio: 1 / 1;
-  transform: rotate(-2deg);
-}
-
-.about-me-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.about-me-text {
-  padding: 1.5rem;
-  background: rgba(255, 249, 239, 0.72);
-  border: 1px solid rgba(24, 22, 26, 0.1);
-  box-shadow: var(--shadow);
-}
-
-.about-me-text h1 {
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  max-width: 16ch;
-}
-
-.contact-form-section {
-  padding: 4rem 0;
-}
-
-.contact-form {
-  max-width: 640px;
-  padding: 2rem;
-  background: rgba(255, 249, 239, 0.78);
-  border: 1px solid rgba(24, 22, 26, 0.1);
-  box-shadow: var(--shadow);
-}
-
-.form-field {
-  margin-bottom: 1.5rem;
-}
-
-.form-field label {
-  display: block;
-  margin-bottom: 0.4rem;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--ink-soft);
-}
-
-.form-field input,
-.form-field textarea {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  font-family: "Fraunces", serif;
-  font-size: 1rem;
-  border: 1px solid rgba(24, 22, 26, 0.2);
-  background: rgba(255, 251, 245, 0.8);
-  color: var(--ink);
-  border-radius: 0;
-}
-
-.form-field input:focus,
-.form-field textarea:focus {
-  outline: 2px solid var(--red);
-  outline-offset: 2px;
-}
-
 /* ── Reveal animation ── */
 .reveal {
   opacity: 0;
@@ -521,5 +420,855 @@ p {
 
   h1 {
     max-width: 9ch;
+  }
+}
+
+/* ── Behance-Style Dual-Column Layout ── */
+.behance-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 3rem;
+  align-items: start;
+  width: calc(100% - 2rem);
+  margin: 2rem auto;
+}
+
+.behance-sidebar {
+  position: sticky;
+  top: 6rem;
+  background: rgba(255, 249, 239, 0.72);
+  border: 1px solid rgba(24, 22, 26, 0.1);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.behance-profile-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.behance-avatar-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1.2rem;
+}
+
+.behance-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--paper);
+  box-shadow: var(--shadow);
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.behance-avatar-container:hover .behance-avatar {
+  transform: scale(1.08) rotate(5deg);
+}
+
+.behance-name-container {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.behance-name {
+  font-family: "Fraunces", serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.behance-badge {
+  background: var(--red);
+  color: #fff9ef;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.behance-title {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.behance-location {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.behance-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.btn-follow {
+  width: 100%;
+  border: none;
+  background: var(--red);
+  color: #fff9ef;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(194, 74, 54, 0.25);
+}
+
+.btn-follow:hover {
+  background: #a93c2a;
+  transform: translateY(-2px);
+}
+
+.btn-follow.active {
+  background: var(--olive);
+  box-shadow: 0 4px 12px rgba(105, 117, 76, 0.25);
+}
+
+.behance-bio {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0;
+  text-align: justify;
+}
+
+/* ── Shared Section Title (replaces inline styles) ── */
+.section-page-title {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 2rem;
+  color: var(--red);
+  margin-top: 0;
+  max-width: none;
+}
+
+/* ── Social link icons (sidebar) ── */
+.social-link-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(24, 22, 26, 0.12);
+  color: var(--ink);
+  transition: all 0.25s ease;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+/* Category Grid & Cards */
+.category-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border: none;
+  box-shadow: none;
+  overflow: hidden;
+  background: transparent;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-radius: 4px;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+}
+
+.category-cover-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: transparent;
+}
+
+.category-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease, filter 0.3s ease;
+}
+
+.category-card:hover .category-cover {
+  transform: scale(1.04);
+  filter: brightness(0.65);
+}
+
+.category-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(24, 22, 26, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.category-card:hover .category-overlay {
+  opacity: 1;
+}
+
+/* ── Behance-Style Hover Overlay content ── */
+.behance-overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.behance-overlay-title {
+  font-family: "Fraunces", serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #fff9ef;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  transform: translateY(15px);
+  transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.behance-overlay-category {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--red);
+  background: rgba(194, 74, 54, 0.15);
+  border: 1px solid rgba(194, 74, 54, 0.3);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+  transform: translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.category-card:hover .behance-overlay-title,
+.category-card:hover .behance-overlay-category {
+  transform: translateY(0);
+}
+
+/* Video Hub Filter Tabs */
+.filter-tabs-container {
+  width: 100%;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  border-bottom: 1px solid rgba(24, 22, 26, 0.1);
+  padding-bottom: 1.2rem;
+}
+
+.filter-tab {
+  border: 1px solid rgba(24, 22, 26, 0.15);
+  background: rgba(255, 251, 245, 0.6);
+  padding: 0.6rem 1.2rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  cursor: pointer;
+  border-radius: 999px;
+  transition: all 0.25s ease;
+}
+
+.filter-tab:hover {
+  background: rgba(255, 251, 245, 0.9);
+  transform: translateY(-1px);
+}
+
+.filter-tab.active {
+  background: var(--ink);
+  color: #fff9ef;
+  border-color: var(--ink);
+}
+
+/* Responsive adjustment for Behance Layout */
+@media (max-width: 900px) {
+  .behance-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 1rem auto;
+  }
+
+  .behance-sidebar {
+    position: relative;
+    top: 0;
+  }
+}
+
+/* ── Trendy & Aligned Contact Page Redesign ── */
+.contact-sidebar {
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.contact-sidebar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(24, 22, 26, 0.25);
+}
+
+.contact-card-container {
+  background: rgba(255, 249, 239, 0.75);
+  border: 1px solid rgba(24, 22, 26, 0.1);
+  box-shadow: var(--shadow);
+  padding: 3rem;
+  border-radius: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.form-field-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 2.2rem;
+}
+
+.modern-input {
+  border: none;
+  border-bottom: 2px solid rgba(24, 22, 26, 0.12);
+  background: transparent;
+  width: 100%;
+  padding: 0.7rem 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.95rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.modern-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.modern-label {
+  position: absolute;
+  left: 0;
+  top: 0.7rem;
+  color: var(--ink-soft);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85rem;
+  transition: all 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+}
+
+.modern-input:focus ~ .modern-label,
+.modern-input:valid ~ .modern-label {
+  top: -1rem;
+  font-size: 0.68rem;
+  color: var(--red);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.modern-input:focus {
+  border-bottom-color: var(--red);
+}
+
+.contact-success-state {
+  animation: fadeInSuccess 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes fadeInSuccess {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-card-container {
+    padding: 2rem 1.5rem;
+  }
+}
+
+.social-link-item:hover {
+  background: var(--red) !important;
+  color: #fff9ef !important;
+  border-color: var(--red) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(194, 74, 54, 0.25);
+}
+
+/* ── Kicau Dynamic Collage Showcase Styles ── */
+.hover-collage-img1 {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease !important;
+}
+
+.hover-collage-img1:hover {
+  transform: rotate(-1deg) scale(1.05) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25) !important;
+  z-index: 5 !important;
+}
+
+.hover-collage-img2 {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.hover-collage-img2:hover {
+  transform: rotate(2deg) scale(1.08) !important;
+  background-color: var(--olive) !important;
+  box-shadow: 0 12px 36px rgba(105, 117, 76, 0.4) !important;
+  border-color: #fff9ef !important;
+}
+
+@media (max-width: 768px) {
+  .kicau-collage-section {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    margin-top: 3rem !important;
+    padding-top: 2rem !important;
+  }
+  
+  .kicau-collage-visual {
+    height: 300px !important;
+  }
+}
+
+/* ── Video Hub Cards (borderless, clean) ── */
+.video-hub-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.video-hub-embed {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #0a0a0a;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.video-hub-card:hover .video-hub-embed {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  transform: translateY(-3px);
+}
+
+.video-hub-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0 0.2rem;
+}
+
+.video-hub-cat {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--red);
+  font-weight: 500;
+}
+
+.video-hub-title {
+  font-family: "Fraunces", serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.video-hub-desc {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.video-hub-link {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  color: var(--ink);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 0.2rem;
+  border-bottom: 1px solid currentColor;
+  align-self: flex-start;
+  transition: color 0.2s ease;
+}
+
+.video-hub-link:hover {
+  color: var(--red);
+}
+
+/* ── Contact Page Layout ── */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - 80px);
+  width: 100%;
+  margin: 0;
+}
+
+.contact-left {
+  background: var(--ink);
+  color: #fff9ef;
+  padding: 5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-left::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.contact-left-top {
+  position: relative;
+  z-index: 1;
+}
+
+.contact-tagline {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(3.5rem, 7vw, 6rem);
+  line-height: 0.9;
+  margin: 1.5rem 0;
+  letter-spacing: -0.01em;
+  color: #fff9ef;
+}
+
+.contact-tagline .accent {
+  color: var(--red);
+  display: block;
+}
+
+.contact-tagline span:not(.accent) {
+  display: block;
+}
+
+.contact-desc {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: rgba(255, 249, 239, 0.65);
+  max-width: 38ch;
+  margin: 0;
+}
+
+.contact-left-bottom {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-divider {
+  width: 40px;
+  height: 2px;
+  background: var(--red);
+  margin-bottom: 0.5rem;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.contact-info-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 249, 239, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff9ef;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.contact-info-item:hover .contact-info-icon {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.contact-info-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--red);
+  margin-bottom: 0.15rem;
+}
+
+.contact-info-val {
+  font-size: 0.92rem;
+  color: #fff9ef;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.contact-info-val:hover {
+  color: rgba(255, 249, 239, 0.7);
+}
+
+.contact-social-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.contact-social-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(255, 249, 239, 0.15);
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  color: rgba(255, 249, 239, 0.65);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.25s ease;
+}
+
+.contact-social-pill:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff9ef;
+}
+
+.contact-right {
+  background: var(--paper);
+  padding: 5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact-form-eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--red);
+  margin-bottom: 0.75rem;
+}
+
+.contact-form-title {
+  font-family: "Fraunces", serif;
+  font-size: 2.2rem;
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 2.5rem;
+  color: var(--ink);
+  max-width: none;
+}
+
+/* Floating label inputs */
+.cfield {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.cfield input,
+.cfield textarea,
+.cfield select {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid rgba(24, 22, 26, 0.2);
+  background: transparent;
+  padding: 0.8rem 0 0.5rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.95rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.cfield textarea {
+  resize: none;
+  min-height: 100px;
+}
+
+.cfield label {
+  position: absolute;
+  left: 0;
+  top: 0.8rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cfield input:focus,
+.cfield textarea:focus {
+  border-bottom-color: var(--red);
+}
+
+.cfield input:focus ~ label,
+.cfield input:not(:placeholder-shown) ~ label,
+.cfield textarea:focus ~ label,
+.cfield textarea:not(:placeholder-shown) ~ label {
+  top: -0.9rem;
+  font-size: 0.65rem;
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.cfield::after {
+  content: "";
+  display: block;
+  height: 1.5px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  margin-top: -1.5px;
+}
+
+.cfield:focus-within::after {
+  transform: scaleX(1);
+}
+
+.contact-submit-btn {
+  width: 100%;
+  background: var(--ink);
+  color: #fff9ef;
+  border: none;
+  border-radius: 999px;
+  padding: 1.1rem 2rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 18px rgba(24, 22, 26, 0.15);
+}
+
+.contact-submit-btn:hover {
+  background: var(--red);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(194, 74, 54, 0.3);
+}
+
+.contact-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Contact success state */
+.contact-success {
+  display: none;
+  text-align: center;
+  padding: 2rem 0;
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.success-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(105, 117, 76, 0.1);
+  border: 2px solid var(--olive);
+  color: var(--olive);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.success-title {
+  font-family: "Fraunces", serif;
+  font-size: 2.5rem;
+  color: var(--ink);
+  margin: 0 0 0.5rem;
+  max-width: none;
+}
+
+.success-sub {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  max-width: 30ch;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+  .contact-left {
+    padding: 3.5rem 2rem;
+    min-height: auto;
+  }
+  .contact-right {
+    padding: 3.5rem 2rem;
   }
 }
