@@ -5,9 +5,17 @@ const fs = require("fs");
 const multer = require("multer");
 const session = require("express-session");
 const Database = require("better-sqlite3");
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const SESSION_SECRET = process.env.SESSION_SECRET;
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+
+if (!SESSION_SECRET || !ADMIN_USERNAME || !ADMIN_PASSWORD) {
+  throw new Error("Missing required environment variables: SESSION_SECRET, ADMIN_USERNAME, ADMIN_PASSWORD");
+}
 
 app.use(cors());
 app.use(express.json());
@@ -15,33 +23,48 @@ app.use(express.static(path.join(__dirname)));
 
 // ─── Session ───
 app.use(session({
-  secret: "rudigetih-secret-key-2026",
+  secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 } // 1 day
+  cookie: {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 24 * 60 * 60 * 1000
+  } // 1 day
 }));
 
 // ─── Auth middleware ───
-function requireAuth(req, res, next) {
-  if (req.session && req.session.authenticated) {
+function isAuthenticated(req) {
+  return Boolean(req.session && req.session.authenticated);
+}
+
+function requireAdminPage(req, res, next) {
+  if (isAuthenticated(req)) {
     return next();
   }
-  // If requesting an admin page, redirect to login
-  if (req.path.startsWith("/admin") && req.path !== "/admin/login") {
-    return res.redirect("/admin/login");
+  return res.redirect("/admin/login");
+}
+
+function requireAuthApi(req, res, next) {
+  if (isAuthenticated(req)) {
+    return next();
   }
-  next();
+  return res.status(401).json({ error: "Authentication required" });
 }
 
 // Apply auth to admin routes (except login page)
-app.use("/admin", requireAuth);
-app.use("/api/projects", requireAuth);
-app.use("/api/upload", requireAuth);
+app.use("/admin", function(req, res, next) {
+  if (req.path === "/login") {
+    return next();
+  }
+  return requireAdminPage(req, res, next);
+});
 
 // ─── Login ───
 app.post("/api/login", function(req, res) {
   const { username, password } = req.body;
-  if (username === "admin007" && password === "admin008") {
+  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
     req.session.authenticated = true;
     req.session.username = username;
     return res.json({ success: true });
@@ -99,7 +122,7 @@ const upload = multer({
 });
 
 // POST /api/upload — upload a single file
-app.post("/api/upload", upload.single("file"), function (req, res) {
+app.post("/api/upload", requireAuthApi, upload.single("file"), function (req, res) {
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
   }
@@ -198,7 +221,15 @@ app.get("/api/projects", (req, res) => {
 
 app.get("/api/projects/:slug", (req, res) => {
   try {
-    const p = db.prepare("SELECT * FROM projects WHERE slug = ?").get(req.params.slug);
+    const param = req.params.slug;
+    let p;
+    // If the param is a number, look up by numeric id, otherwise by slug string
+    if (/^\d+$/.test(param)) {
+      p = db.prepare("SELECT * FROM projects WHERE id = ?").get(Number(param));
+    } else {
+      p = db.prepare("SELECT * FROM projects WHERE slug = ?").get(param);
+    }
+
     if (!p) return res.status(404).json({ error: "Not found" });
     p.gallery_gifs = JSON.parse(p.gallery_gifs || "[]");
     res.json(p);
@@ -207,7 +238,7 @@ app.get("/api/projects/:slug", (req, res) => {
   }
 });
 
-app.post("/api/projects", (req, res) => {
+app.post("/api/projects", requireAuthApi, (req, res) => {
   try {
     const b = req.body;
     if (!b.title || !b.slug) return res.status(400).json({ error: "Title and slug required" });
@@ -225,7 +256,7 @@ app.post("/api/projects", (req, res) => {
   }
 });
 
-app.put("/api/projects/:id", (req, res) => {
+app.put("/api/projects/:id", requireAuthApi, (req, res) => {
   try {
     const existing = db.prepare("SELECT * FROM projects WHERE id = ?").get(req.params.id);
     if (!existing) return res.status(404).json({ error: "Not found" });
@@ -255,7 +286,7 @@ app.put("/api/projects/:id", (req, res) => {
   }
 });
 
-app.delete("/api/projects/:id", (req, res) => {
+app.delete("/api/projects/:id", requireAuthApi, (req, res) => {
   try {
     const r = db.prepare("DELETE FROM projects WHERE id = ?").run(req.params.id);
     if (r.changes === 0) return res.status(404).json({ error: "Not found" });
